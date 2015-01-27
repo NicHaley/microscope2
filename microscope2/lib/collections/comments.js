@@ -1,0 +1,1 @@
+Comments = new Mongo.Collections('comments');
