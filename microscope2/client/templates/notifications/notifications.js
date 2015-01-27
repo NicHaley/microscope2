@@ -8,7 +8,7 @@ Template.notifications.helpers({
 	}
 });
 
-Template.notificationItem.helper({
+Template.notificationItem.helpers({
 	notificationPostPath: function() {
 		return Router.routes.postPage.path({_id: this.postId}); 
 	}
