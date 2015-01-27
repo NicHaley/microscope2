@@ -1,1 +1,1 @@
-Comments = new Mongo.Collections('comments');
+Comments = new Mongo.Collection('comments');
