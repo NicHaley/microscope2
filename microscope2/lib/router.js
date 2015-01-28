@@ -3,9 +3,11 @@ Router.configure({
 	loadingTemplate: 'loading',
 	notFoundTemplate: 'notFound',
 	waitOn: function() { 
-		return [Meteor.subscribe('notifications')] 
+		return [Meteor.subscribe('posts'), Meteor.subscribe('notifications')] 
 	}
 });
+
+Router.route('/', {name: 'postsList'});
 
 Router.route('/posts/:_id', {
 	name: 'postPage',
@@ -18,24 +20,9 @@ Router.route('/posts/:_id', {
 Router.route('/posts/:_id/edit', {
 	name: 'postEdit',
 	data: function() {return Posts.findOne(this.params._id); }
-});
+})
 
 Router.route('/submit', {name: 'postSubmit'});
-
-// Used for pagination
-Router.route('/postsLimit?', {
-	name: 'postsList',
-	waitOn: function() {
-		var limit = parseInt(this.params.postsLimit) || 5;
-		return Meteor.subscribe('posts', {sort: {submitted: -1}, limit: limit}); 
-	},
-	data: function(){
-		var limit = parseInt(this.params.postsLimit) || 5; 
-		return {
-			posts: Posts.find({}, {sort: {submitted: -1}, limit: limit})
-		};
-	}
-});
 
 var requireLogin = function() {
 	if (! Meteor.user()) {
